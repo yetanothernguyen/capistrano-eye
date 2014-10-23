@@ -1,6 +1,6 @@
 namespace :eye do
   task :load do
-    on release_roles(:app) do
+    on release_roles(:job) do
       within(release_path) do
         execute :mkdir, "-pv", "$HOME/eye"
         execute :eye, :load,  fetch(:eye_config, "./config/#{fetch(:application)}.eye")
@@ -10,7 +10,7 @@ namespace :eye do
 
   %w(start stop restart info).each do |cmd|
     task cmd.to_sym do
-      on roles(:app) do
+      on roles(:job) do
         execute :eye, cmd.to_sym, fetch(:eye_application, fetch(:application))
       end
     end
